@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install pyrogram
+          pip install pyrogram faker requests tgcrypto
 
       - name: Run bot
         run: |
