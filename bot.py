@@ -30,6 +30,10 @@ def gen_command_handler(client, message):
     else:
         client.send_message(message.chat.id, "Invalid command format")
 
+@app.on_message(filters.command("run"))
+def validator(client, message):
+    message.reply_text("~ Checking..")
+    thread(message)
 
 # Run the bot
 if __name__ == "__main__":
