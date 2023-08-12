@@ -5,25 +5,21 @@ from multiprocessing.dummy import Pool
 from faker import Faker  
 
 
-def genip():
-
-	brapa = input('How Much IP? ')
-	for i in range(0, int(brapa)):
+def genip(message, number):
+	ip_count = number
+	for i in range(0, int(ip_count)):
 		faker = Faker()  
 		ip_address = faker.ipv4() 
-		print('RANDOM IP ->', ip_address)
-		open('ip.txt', 'a').write(ip_address+'\n')
-	print('[+] SUCCESS GENERATE IP!! ')
+		open('ips.txt', 'a').write(ip_address+'\n')
+	message.reply_text("~ Genrating Successfull!")
 
 def yoy():
-
 	lis = input('Your IP List -> ')
 	tol = open(lis, 'r').readlines()
 	for i in tol:
 		yaa = i.strip()
 		part = yaa.split('.')
 		a = '.'
-
 		start = 0
 		end = 244
 		for j in range(start, end + 1):
@@ -33,28 +29,26 @@ def yoy():
 		print(yaa, '-> RANGED!!')
 
 
-def valid(hayuk):
-
+def valid(hayuk, message):
 		try:
 			r = requests.get('http://{}'.format(hayuk), timeout=3)
 			if r.status_code == 200:
-				print(hayuk, '-> LIVE IP')
+				message.reply_text(f"~ Live {hayuk}")
 				open('liveip.txt', 'a').write(hayuk+'\n')
 			elif '<title>' in r.text:
-				print(hayuk, '-> LIVE IP')
+				message.reply_text(f"~ Live {hayuk}")
 				open('liveip.txt', 'a').write(hayuk+'\n')
 			else:
 				pass
 		except Exception:
-			print(hayuk, '-> DEAD')
+			message.reply_text(f"~ DEAD")
 
 
-
-
-def thread(li):
-	ase = open(li, 'r').read().splitlines()
+def thread(message):
+	ip_file_path = 'ips.txt'
+	ase = open(ipPath, 'r').read().splitlines()
 	p = Pool(500)
-	p.map(valid, ase)
+	p.map(valid, [(ip, message) for ip in ase])
 
 if __name__ == "__main__":
 	os.system('cls' if os.name == 'nt' else 'clear')
