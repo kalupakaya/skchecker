@@ -11,7 +11,7 @@ def genip(message, number):
 		faker = Faker()  
 		ip_address = faker.ipv4() 
 		open('ips.txt', 'a').write(ip_address+'\n')
-	message.reply_text("~ Genrating Successfull!")
+	message.edit("~ Genrating Successfull!")
 
 def yoy():
 	lis = input('Your IP List -> ')
